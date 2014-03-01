@@ -103,8 +103,48 @@ var HelloMessage = React.createClass({
 					<p> Virtuaali-DOM esimerkki </p>
 					<pre>
 				   	    <code data-trim>
+var MyComponent = React.createClass({
+  render: function() {
+    if (this.props.first) {
+      return <div className="first"><span>A Span</span></div>;
+    } else {
+      return <div className="second"><p>A Paragraph</p></div>;
+    }
+  }
+});
 				   	    </code>
-				   	</pre> 
+				   	</pre>
+				   	<p>Tyhjästä tilanteeseen jossa "first" arvo asetettu</p>
+				   	<ul>
+				   		<li>
+				   			Luodaan DOM node: 
+				   			<pre>&lt;div className="first"&gt;&lt;span&gt;A Span&lt;/span&gt;&lt;/div&gt;</pre>
+				   		</li> 
+				   	</ul> 
+				</section>
+				<section>
+					<p> Virtuaali-DOM esimerkki </p>
+					<pre>
+				   	    <code data-trim>
+var MyComponent = React.createClass({
+  render: function() {
+    if (this.props.first) {
+      return <div className="first"><span>A Span</span></div>;
+    } else {
+      return <div className="second"><p>A Paragraph</p></div>;
+    }
+  }
+});
+				   	    </code>
+				   	</pre>
+				   	<p>Tilanteesta "first" tilanteeseen "second" -vaiheet</p>
+				   	<ul>
+				   		<li class="fragment">
+				   			Korvataan <code>className="first"</code> <code>className="second"</code> 
+				   		</li> 
+				   		<li class="fragment">
+				   		</li>
+				   	</ul> 
 				</section>
 			</div>
 		</div>
