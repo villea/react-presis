@@ -149,6 +149,46 @@ var MyComponent = React.createClass({
 				   		</li>
 				   	</ul> 
 				</section>
+				<section>
+					<h2>Komponentit</h2>
+				</section>
+				<section>
+					<ul>
+						<li>Komponentti kuvaa tiettyä näkymää/toiminnallisuutta käyttöliittymässä esim.MessageBox,Messages</li>
+						<li class="fragment">MVC arkkitehtuurin View-osa</li>
+						<li class="fragment">Voivat olla tilallisia tai tilattomia</li>
+						<li class="fragment">Verrattavissa AngularJS:n direktiiveihin, joiden avulla laajennetaan HTML:n syntaksia</li>
+						<li class="fragment">Voivat koostua useista eri komponenteista</li>
+					</ul>
+				</section>
+				<section>
+					<p>Komponenttiesimerkki 1 - Kompositio ja propertyt/p>
+					<pre>
+				   	    <code data-trim>
+var Message = React.createClass({
+    render : function(){
+        return (&lt;p&gt;&lt;b&gt;{this.props.sender}&lt;/b&gt; {this.props.message}&lt;/p&gt;)
+    }
+});
+
+var Messages = React.createClass({
+    render: function() {
+        return (&lt;ul&gt;
+                  {this.props.messages.map(function (msg){
+                    return &lt;li&gt;&lt;Message sender={msg.sender} message={msg.message} /&gt;&lt;/li&gt;
+                  })}
+                &lt;/ul&gt;)
+    }
+});
+
+var msgs = [{sender: "Doge", message : "Wow, such example"},
+            {sender: "Swag", message : "#Yolo"}]
+
+React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
+				   	    </code>
+				   	</pre>
+				<a href="http://jsfiddle.net/vilan/X6db4/">fiddle</a>   	
+				</section>
 			</div>
 		</div>
 
