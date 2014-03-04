@@ -162,6 +162,28 @@ var MyComponent = React.createClass({
 					</ul>
 				</section>
 				<section>
+					<p>Komponenttien elinkaari</p>
+					<pre>
+				   	    <code data-trim>
+var Component = React.createClass({
+    componentWillMount : function(){
+        console.log("componentWillMount")
+    },
+    render : function(){
+        console.log("render");
+        return <p>component</p>
+    },
+    componentDidMount : function(){
+        console.log("componentDidMount") 
+    }
+});
+
+React.renderComponent(&lt;Component /&gt;, document.body)
+				   	    </code>
+				   	</pre>
+				   	<a href="http://jsfiddle.net/vilan/P3Ue8/2/">fiddle</a>	
+				</section>
+				<section>
 					<p>Komponenttiesimerkki 1 - Kompositio ja propertyt/p>
 					<pre>
 				   	    <code data-trim>
@@ -197,7 +219,13 @@ React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
 					<p>Tilalliset komponentit</p>
 					<ul>
 						<li> Tila alustetaan <code>getInitialState</code> metodissa</li>
-						<li> 
+						<li> Tilaa hallinnoidaan vain ja AINOASTAAN <code>setState</code> metodin kautta</li>
+					</ul>	
+				</section>
+				<section>
+					<p>Komponenttien välinen kommunikointi</p>
+					<ul>
+					</ul>
 				</section>
 			</div>
 		</div>
