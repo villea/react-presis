@@ -41,6 +41,7 @@
                    <ul>
                    	 <li>Javascript kirjasto web-käyttöliittymien tekemiseen</li>
                    	 <li class="fragment">React on kirjasto eikä verrattavissa esim.AngularJS:n joka on sovellusalusta</li>
+                   	 <li class="fragment">Käytetään monissa tilanteissa korvaamaan Backbone.js:n View komponentit</li>
                    	 <li class="fragment">Facebook tiimin kehittämä ja laajalti käytössä (esim chat)</li>
                    	 <li class="fragment">Myös instagram kuvapalvelussa käytössä</li>
                    </ul>
@@ -244,11 +245,24 @@ React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
 					<ul>
 						<li> Tila alustetaan <code>getInitialState</code> metodissa</li>
 						<li> Tilaa hallinnoidaan vain ja AINOASTAAN <code>setState</code> metodin kautta</li>
+						<li> Komponenttien välinen kommunikointi event callback - metodeilla</li>
 					</ul>	
 				</section>
 				<section>
-					<p>Komponenttien välinen kommunikointi</p>
+					<h2> Mixins </h2>
 				</section>
+				<section>
+					<ul>
+						<li>Voidaan jakaa toiminnallisuutta komponenttien kesken</li>
+						<li>Perus Javascript objekteja</li>
+						<li>Komponentilla voi olla useampia mixin-objekteja</li>
+						<li>Huomattavasti joustavampaa kuin perintä</li>
+					</ul>
+				</section>
+				<section>
+					<p> "Hyödyllinen" Mixin - esimerkki </p>
+					<a href="http://jsfiddle.net/vilan/9NGCb/2/">fiddle</a>
+				</section>	
 			</div>
 		</div>
 
