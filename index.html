@@ -34,12 +34,13 @@
 			<div class="slides">
 				<section>
                   <h1> React.js </h1>
-                  <p>A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES</p>
-                  <a href="http://http://facebook.github.io/react/">Home</a>
+                  <p>"A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES"</p>
+                  <a href="http://facebook.github.io/react/">http://facebook.github.io/react/</a>
 				</section>
 				<section>
                    <ul>
-                   	 <li>Javascript kirjasto käyttöliittymien tekemiseen</li>
+                   	 <li>Javascript kirjasto web-käyttöliittymien tekemiseen</li>
+                   	 <li class="fragment">React on kirjasto eikä verrattavissa esim.AngularJS:n joka on sovellusalusta</li>
                    	 <li class="fragment">Facebook tiimin kehittämä ja laajalti käytössä (esim chat)</li>
                    	 <li class="fragment">Myös instagram kuvapalvelussa käytössä</li>
                    </ul>
@@ -92,10 +93,10 @@ var HelloMessage = React.createClass({
 				   	</code>
 				</section>
 				<section>
-					<p>Miksi JSX? Miksi kömpelö Javascript DOM API? Miksei Handlebars sun muut viiksinotaatiot?</p>
 					<ul>
+						<li>Miksi JSX? Miksi kömpelö DOM API? Miksei Handlebars etc?</li>
 						<li class="fragment">React toteuttaa oman virtuaalisen DOM:n</li>
-						<li class="fragment">Mahdollistaa HTML:n generoinnin optimoidusti</li>
+						<li class="fragment">Mahdollistaa HTML:n generoinnin optimoidusti. Vain muutokset vaikuttavat</li>
 						<li class="fragment">Virtuaalinen DOM tunnistaa muutokset ja generoi vain muuttuneet nodet koko HTML:n sijaan</li> 
 					</ul>	
 				</section>
@@ -154,11 +155,11 @@ var MyComponent = React.createClass({
 				</section>
 				<section>
 					<ul>
-						<li>Komponentti kuvaa tiettyä näkymää/toiminnallisuutta käyttöliittymässä esim.MessageBox,Messages</li>
+						<li>Komponentti kuvaa tiettyä näkymää/toiminnallisuutta käyttöliittymässä esim.SendMessage,Messages,Message</li>
 						<li class="fragment">MVC arkkitehtuurin View-osa</li>
 						<li class="fragment">Voivat olla tilallisia tai tilattomia</li>
 						<li class="fragment">Verrattavissa AngularJS:n direktiiveihin, joiden avulla laajennetaan HTML:n syntaksia</li>
-						<li class="fragment">Voivat koostua useista eri komponenteista</li>
+						<li class="fragment">Voivat koostua (ja usein koostuvatkin) useista sisäkkäisistä komponenteista</li>
 					</ul>
 				</section>
 				<section>
@@ -184,7 +185,30 @@ React.renderComponent(&lt;Component /&gt;, document.body)
 				   	<a href="http://jsfiddle.net/vilan/P3Ue8/2/">fiddle</a>	
 				</section>
 				<section>
-					<p>Komponenttiesimerkki 1 - Kompositio ja propertyt/p>
+					<p> Refs - DOM elementtien käsittely</p>
+					<pre>
+				   	    <code data-trim>
+var Component = React.createClass({
+    componentWillMount : function(){
+        console.log("componentWillMount")
+    },
+    render : function(){
+        console.log("render");
+        return <p ref="component">component</p>
+    },
+    componentDidMount : function(){
+        console.log("componentDidMount")
+        this.refs.component.getDOMNode().innerHTML="updated after render";
+    }
+});
+
+React.renderComponent(&lt;Component /&gt;, document.body)
+				   	    </code>
+				   	</pre>
+				   	<a href="http://jsfiddle.net/vilan/P3Ue8/3/">fiddle</a>	
+				</section>
+				<section>
+					<p>Komponenttiesimerkki 1 - Kompositio ja propertyt</p>
 					<pre>
 				   	    <code data-trim>
 var Message = React.createClass({
@@ -224,8 +248,6 @@ React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
 				</section>
 				<section>
 					<p>Komponenttien välinen kommunikointi</p>
-					<ul>
-					</ul>
 				</section>
 			</div>
 		</div>
@@ -235,8 +257,8 @@ React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
 
 		<script>
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
+			// Full list of confiuration options available here:
+			// https://github.com/hakimel/reveal.js#configurationg
 			Reveal.initialize({
 				controls: true,
 				progress: true,
