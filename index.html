@@ -42,6 +42,7 @@
                    	 <li>Javascript kirjasto web-käyttöliittymien tekemiseen</li>
                    	 <li class="fragment">React on kirjasto eikä verrattavissa esim.AngularJS:n joka on sovellusalusta</li>
                    	 <li class="fragment">Käytetään monissa tilanteissa korvaamaan Backbone.js:n View komponentit</li>
+                   	 <li class="fragment">Erittäin suorituskykyinen</li>
                    	 <li class="fragment">Facebook tiimin kehittämä ja laajalti käytössä (esim chat)</li>
                    	 <li class="fragment">Myös instagram kuvapalvelussa käytössä</li>
                    </ul>
@@ -243,9 +244,9 @@ React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
 				<section>
 					<p>Tilalliset komponentit</p>
 					<ul>
-						<li> Tila alustetaan <code>getInitialState</code> metodissa</li>
-						<li> Tilaa hallinnoidaan vain ja AINOASTAAN <code>setState</code> metodin kautta</li>
-						<li> Komponenttien välinen kommunikointi event callback - metodeilla</li>
+						<li class="fragment"> Tila alustetaan <code>getInitialState</code> metodissa</li>
+						<li class="fragment"> Tilaa hallinnoidaan vain ja AINOASTAAN <code>setState</code> metodin kautta</li>
+						<li class="fragment"> Komponenttien välinen kommunikointi event callback - metodeilla</li>
 					</ul>	
 				</section>
 				<section>
@@ -254,15 +255,104 @@ React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
 				<section>
 					<ul>
 						<li>Voidaan jakaa toiminnallisuutta komponenttien kesken</li>
-						<li>Perus Javascript objekteja</li>
-						<li>Komponentilla voi olla useampia mixin-objekteja</li>
-						<li>Huomattavasti joustavampaa kuin perintä</li>
+						<li class="fragment">Perus Javascript objekteja</li>
+						<li class="fragment">Komponentilla voi olla useampia mixin-objekteja</li>
+						<li class="fragment">Huomattavasti joustavampaa kuin perintä</li>
 					</ul>
 				</section>
 				<section>
 					<p> "Hyödyllinen" Mixin - esimerkki </p>
 					<a href="http://jsfiddle.net/vilan/9NGCb/2/">fiddle</a>
+				</section>
+				<section>
+					<h2>React ja Clojure(Script)</h2>
+				</section>
+				<section>
+					<ul>
+						<li>Clojuren "immutable" tietomallit sopivat täydellisesti React-filosofiaan</li>
+						<li class="fragment">Mahdollistaa jopa paremman suorituskyvyn kuin perus-Javascript</li>
+						<li class="fragment">Uusia kirjastoja ilmestyy kuin sieniä sateella. Voittaja selviää myöhemmin</li>
+					</ul>
+				</section>
+				<section>
+					<p>Reactin käyttö ilman ClojureScript-apukirjastoa</p>
+					<pre>
+						<code data-trim>
+(def comments-data [{:author "Pete Hunt" :text "This is a comment."}
+                    {:author "Jordan Walke" :text "This is *another* coment"}])
+
+(def Comment
+  (js/React.createClass
+   #js {:render (fn []
+                  (this-as this
+                           (let [comment (.. this -props -comment)]
+                             (js/React.DOM.div
+                              #js {:className "comment"}
+                              (js/React.DOM.h2 nil  (:author comment))
+                              (js/React.DOM.span nil (:text comment))))))}))
+
+(def CommentList 
+  (js/React.createClass
+   #js {:render (fn []
+                  (this-as this
+                           (js/React.DOM.div
+                            #js {:className "commentList"}
+                            (into-array
+                             (map #(Comment #js {:comment %})
+                                  (.. this -props -comments))))))}))
+
+(def CommentBox
+  (js/React.createClass
+   #js {:render (fn []
+                  (this-as this
+                           (js/React.DOM.div
+                            #js {:className "commentBox"}
+                            (js/React.DOM.h1 nil "Comments")
+                            (CommentList #js {:comments
+                                              (.. this -props -comments)}))))}))
+
+(js/React.renderComponent
+ (CommentBox #js {:comments comments-data})
+ (.getElementById js/document "content")) 
+						</code>
+					</pre>
+					<a href="http://www.lexicallyscoped.com/2013/12/25/slice-of-reactjs-and-cljs.html">Lähde</a>
+				</section>
+				<section>
+					<p> Om </p>
+					<pre>
+						<code data-trim>
+(defn comment [{:keys [author text]} c]
+  (om/component
+   (dom/div #js {:className "comment"}
+            (dom/h2 nil author)
+            (dom/span nil text))))
+
+(defn comment-list [app]
+  (om/component
+   (dom/div nil
+            (dom/div #js {:className "commentList"}
+                     (into-array (map #(om/build comment app
+                                                 {:path [%]})
+                                      (range (count app))))))))
+(defn comment-box [app]
+  (om/component
+   (dom/div #js {:className "commentBox"}
+            (dom/h1 nil "Comment")
+            (om/build comment-list app {:path []}))))
+
+(om/root
+ comments-data
+ comment-box
+ (.getElementById js/document "content"))
+						</code>
+					</pre>
+					<a href="http://www.lexicallyscoped.com/2013/12/25/slice-of-reactjs-and-cljs.html">Lähde</a>
 				</section>	
+				<section>
+					<p>Reagent (ex-Cloact)</p>
+					<a href="https://github.com/holmsand/reagent">https://github.com/holmsand/reagent</a>
+				</section>
 			</div>
 		</div>
 
