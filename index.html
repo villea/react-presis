@@ -374,18 +374,20 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
 					<p> "Hyödyllinen" Mixin - esimerkki </p>
 					<a href="http://jsfiddle.net/vilan/9NGCb/2/">fiddle</a>
 				</section>
+			-->
 				<section>
-					<h2>React ja Clojure(Script)</h2>
+					<h2>Enter Clojure(Script)</h2>
 				</section>
 				<section>
+					<p>Why?</p>
 					<ul>
-						<li>Clojuren "immutable" tietomallit sopivat täydellisesti React-filosofiaan</li>
-						<li class="fragment">Mahdollistaa jopa paremman suorituskyvyn kuin perus-Javascript</li>
-						<li class="fragment">Uusia kirjastoja ilmestyy kuin sieniä sateella. Voittaja selviää myöhemmin</li>
+						<li class="fragment">Immutable datastructures offers performance optimization</li>
+						<li class="fragment">React is "light" library and unopionated</li>
+						<li class="fragment">Everybody loves Clojure :) </li>
 					</ul>
 				</section>
 				<section>
-					<p>Reactin käyttö ilman ClojureScript-apukirjastoa</p>
+					<p>Using ClojureScript without any libraries</p>
 					<pre>
 						<code data-trim>
 (def comments-data [{:author "Pete Hunt" :text "This is a comment."}
@@ -426,10 +428,9 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
  (.getElementById js/document "content")) 
 						</code>
 					</pre>
-					<a href="http://www.lexicallyscoped.com/2013/12/25/slice-of-reactjs-and-cljs.html">Lähde</a>
 				</section>
 				<section>
-					<p> Om </p>
+					<p>..and same with Om - library</p>
 					<pre>
 						<code data-trim>
 (defn comment [{:keys [author text]} c]
@@ -457,8 +458,9 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
  (.getElementById js/document "content"))
 						</code>
 					</pre>
-					<a href="http://www.lexicallyscoped.com/2013/12/25/slice-of-reactjs-and-cljs.html">Lähde</a>
+					<small><a href="http://www.lexicallyscoped.com/2013/12/25/slice-of-reactjs-and-cljs.html">Source</a></small>
 				</section>	
+			<!--		
 				<section>
 					<p>Reagent (ex-Cloact)</p>
 					<a href="https://github.com/holmsand/reagent">https://github.com/holmsand/reagent</a>
@@ -473,6 +475,7 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
 				<li class="fragment"><a href="https://github.com/tailrecursion/hoplon">https://github.com/tailrecursion/hoplon</a></li>
 			</ul>
 		</section>
+	
 		<section>
 			<h2>Yhteenveto Reactista</h2>
 			<ul>
