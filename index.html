@@ -253,9 +253,103 @@ React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
 				<a href="http://jsfiddle.net/vilan/X6db4/">fiddle</a>   	
 				</section>-->
 				<section>
-					<p>Simple "TODO" with React</p>
-					<a href="http://jsfiddle.net/vilan/pBj7m/3/" target="_blank">fiddle</a>
+					<p>(really) Simple Message app with React</p>
 				</section>
+				<section>
+					<pre>
+				   	    <code data-trim>					
+var Message = React.createClass({
+    render : function(){
+        return &lt;p&gt;&lt;b&gt;{this.props.sender}&lt;/b&gt; {this.props.message}&lt;/p&gt;
+    }
+});
+
+var Messages = React.createClass({
+    render : function() {
+        return (&lt;ul&gt;
+                  {this.props.messages.map(function (msg){
+                    return &lt;li&gt;&lt;Message sender={msg.sender} message={msg.message} /&gt;&lt;/li&gt;
+                  })}
+                &lt;/ul&gt;)
+    }
+});				
+				</code>
+				</pre>	
+				</section>
+				<section>
+					<pre>
+				   	    <code data-trim>		
+var SendMessage = React.createClass({
+    getInitialState : function(){
+      return { sender : "",
+               message : ""}
+    },
+    render : function(){
+        return (
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.sender} onChange={this.setSender} placeholder="Name" />
+            <input type="text" value={this.state.message} onChange={this.setMessage} placeholder="Message" />
+            {this.canSend() ? <input type="submit" value="Send"/> : null}
+          </form>)
+    },
+    setSender : function(event){
+      this.setState({
+        sender : event.target.value
+      });
+    },
+    setMessage : function(event){
+     this.setState({
+       message : event.target.value
+     });
+    },
+    canSend : function(){
+      return this.state.sender.length > 0 && this.state.message.length > 0
+    },
+    handleSubmit : function(){
+        this.props.handler(this.state)
+        this.setState({
+           sender : "",
+           message : ""
+        });
+        return false
+    }
+    
+});
+					</code>
+				</pre>
+				</section>
+				<section>
+					<pre>
+				   	    <code data-trim>
+var MessageApp = React.createClass({
+    getInitialState : function(){
+       return {messages : this.props.messages}
+    },
+    render : function(){
+        return (
+                <div>
+                  <SendMessage handler={this.addMessage} />
+                  <Messages messages={this.state.messages} />
+                </div>
+               )
+    },
+    addMessage : function (msg){
+      this.setState({
+         messages : this.state.messages.concat([msg])
+      });
+    }
+});
+
+var msgs = [{sender: "Doge", message : "Wow, such example"},
+            {sender: "Swag", message : "#Yolo"}]
+
+React.renderComponent(<MessageApp messages={msgs} />, document.body);
+				   	    </code>
+				   	</pre>	
+				</section>
+				<section>
+					<a href="http://jsfiddle.net/vilan/pBj7m/3/" target="_blank">fiddle</a>
+				</section>	
 				<!--
 				<section>
 					<p>Tilalliset komponentit</p>
