@@ -533,9 +533,10 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
                       </code>
                     </pre>
                 </section>	
-			<!--
+			
 			<section>
 			<p>Hoplon.io</p>
+			<!--
 			<ul>
 				<li>"Clojure, everywhere."</li>
 				<li class="fragment">Clojurea serveripäässä. ClojureScriptiä clientissa</li>
@@ -543,6 +544,31 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
 				<li class="fragment">React?</li>
 				<li class="fragment"><a href="https://github.com/tailrecursion/hoplon">https://github.com/tailrecursion/hoplon</a></li>
 			</ul>
+		-->
+			<pre>
+			   <code data-trim>	
+&lt;script type="text/hoplon"&gt;
+  (page "foo/bar.html"
+    (:require [my.lib :as lib]))
+
+  (defc clicks 0)
+&lt;/script&gt;
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/main.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;lib.heading-large&gt;Hello, world!&lt;/lib.heading-large&gt;
+    &lt;p&gt;&lt;text&gt;You've clicked ~{clicks} times.&lt;/text&gt;&lt;/p&gt;
+    &lt;button on-click="{{ #(swap! clicks inc) }}"&gt;
+      Click me!
+    &lt;/button&gt;
+  &lt;/body&gt;
+&lt;/html&gt;		
+		   </code>
+		</pre>
 		</section>
 	
 		<section>
