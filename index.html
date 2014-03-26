@@ -469,12 +469,72 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
 					</pre>
 					<small><a href="http://www.lexicallyscoped.com/2013/12/25/slice-of-reactjs-and-cljs.html">Source</a></small>
 				</section>	
-			<!--		
+				
 				<section>
 					<p>Reagent (ex-Cloact)</p>
 					<a href="https://github.com/holmsand/reagent">https://github.com/holmsand/reagent</a>
 				</section>
 				<section>
+					<pre>
+					  <code data-trim>
+(ns app
+  (:require [reagent.core :as reagent :refer [atom]]))
+
+(def messages (atom []))
+					  </code>	
+				</section>
+				<section>
+					<pre>
+					  <code data-trim>
+(defn show-messages []
+  (if (> (count @messages) 0)
+  [:ul
+  (for [msg @messages]
+    [:li (str (:sender msg) " : "(:message msg))])]
+  [:p "No messages"]))
+					  </code>	
+				</section>
+				<section>
+					<pre>
+					  <code data-trim>
+(defn send-message []
+  (let [sender (atom "")
+        msg (atom "")]
+  (fn []  
+  [:div
+    [:input {:type "text" 
+             :value @sender
+             :placeholder "Sender"
+             :on-change #(reset! sender (-> % .-target .-value))}] 
+    [:input {:type "text" 
+             :value @msg
+             :placeholder "Message"
+             :on-change #(reset! msg (-> % .-target .-value))}]
+    (when (and (> (count @sender) 0)
+               (> (count @msg) 0))
+      [:input {:type "submit" 
+               :value "Send"
+               :on-click #(do (swap! messages conj {:sender @sender
+                                                    :message @msg})
+                              (reset! sender "")
+                              (reset! msg ""))}])])))
+					  </code>		
+				</section>
+				<section>
+					<pre>
+					  <code data-trim>
+(defn message-app []
+  [:div [send-message]
+        [show-messages]])
+
+(defn ^:export run []
+  (reagent/render-component [message-app]
+                            (.-body js/document)))
+                      </code>
+                    </pre>
+                </section>	
+			<!--
+			<section>
 			<p>Hoplon.io</p>
 			<ul>
 				<li>"Clojure, everywhere."</li>
