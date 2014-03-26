@@ -34,10 +34,6 @@
 			<div class="slides">
 				<section>
                   <h1> React.js with ClojureScript </h1>
-                  <!--
-                  <p>"A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES"</p>
-                  <a href="http://facebook.github.io/react/">http://facebook.github.io/react/</a>
-				  -->
 				  <small> Ville Anttonen - Senior Software Designer @ Solita</small>
 				</section>
 				<!-- Hide for now...
@@ -75,101 +71,6 @@ React.renderComponent(&lt;HelloMessage name="John" /&gt;,
 					</code>
 				</pre>
 				</section>
-				<!--
-				<section>
-					<p>JSX ??..</p>
-				</section>
-				<section>
-					<ul>
-						<li>XML:n kaltainen kieli joka kääntyy javascriptiksi</li>
-						<li class="fragment">Ei ole pakollista käyttää, mutta usein kompaktimpaa kuin Javascript</li>
-						<li class="fragment">Ei ole suoraan verrattavissa perus-HTML:n</li>
-					</ul>
-				</section>
-				<section>
-					<p>JSX</p>
-					<pre>
-					 <code data-trim>
-/** @jsx React.DOM */
-var HelloMessage = React.createClass({
-  render: function() {
-    return <div>Hello {this.props.name}</div>;
-  }
-});
-					</code>
-				   </pre>
-				   <p>Javascript</p>
-				   <pre>
-				   	<code data-trim>
-var HelloMessage = React.createClass({  
-  render: function() {
-    return React.DOM.div(null, "Hello ", this.props.name);
-  }
-});
-				   	</code>
-				</section>
-				<section>
-					<ul>
-						<li>Miksi JSX? Miksi kömpelö DOM API? Miksei Handlebars etc?</li>
-						<li class="fragment">React toteuttaa oman virtuaalisen DOM:n</li>
-						<li class="fragment">Mahdollistaa HTML:n generoinnin optimoidusti. Vain muutokset vaikuttavat</li>
-						<li class="fragment">Virtuaalinen DOM tunnistaa muutokset ja generoi vain muuttuneet nodet koko HTML:n sijaan</li> 
-					</ul>	
-				</section>
-				<section>
-					<p> Virtuaali-DOM esimerkki </p>
-					<pre>
-				   	    <code data-trim>
-var MyComponent = React.createClass({
-  render: function() {
-    if (this.props.first) {
-      return <div className="first"><span>A Span</span></div>;
-    } else {
-      return <div className="second"><p>A Paragraph</p></div>;
-    }
-  }
-});
-				   	    </code>
-				   	</pre>
-				   	<p>Tyhjästä tilanteeseen jossa "first" arvo asetettu</p>
-				   	<ul>
-				   		<li>
-				   			Luodaan DOM node: 
-				   			<pre>&lt;div className="first"&gt;&lt;span&gt;A Span&lt;/span&gt;&lt;/div&gt;</pre>
-				   		</li> 
-				   	</ul> 
-				</section>
-				<section>
-					<p> Virtuaali-DOM esimerkki </p>
-					<pre>
-				   	    <code data-trim>
-var MyComponent = React.createClass({
-  render: function() {
-    if (this.props.first) {
-      return <div className="first"><span>A Span</span></div>;
-    } else {
-      return <div className="second"><p>A Paragraph</p></div>;
-    }
-  }
-});
-				   	    </code>
-				   	</pre>
-				   	<p>Tilanteesta "first" tilanteeseen "second" -vaiheet</p>
-				   	<ul>
-				   		<li class="fragment">
-				   			Korvataan <code>className="first"</code> <code>className="second"</code> 
-				   		</li> 
-				   		<li class="fragment">
-				   			Korvataan <pre>&lt;span&gt;A Span&lt;/span&gt;</pre>
-				   					  <pre>&lt;p&gt;A Paragraph&lt;/p&gt;</pre>
-
-				   		</li>
-				   	</ul> 
-				</section>
-				<section>
-					<h2>Komponentit</h2>
-				</section>
-			-->
 				<section>
 					<ul>
 						<li>React apps are composed with components like.MessageBox,Messages,Message,HelloWorld</li>
@@ -179,80 +80,6 @@ var MyComponent = React.createClass({
 						<li class="fragment">Can encapsulate third party libraries like jQuery widgets</li>
 					</ul>
 				</section>
-			<!--	
-				<section>
-					<p>Komponenttien elinkaari</p>
-					<pre>
-				   	    <code data-trim>
-var Component = React.createClass({
-    componentWillMount : function(){
-        console.log("componentWillMount")
-    },
-    render : function(){
-        console.log("render");
-        return <p>component</p>
-    },
-    componentDidMount : function(){
-        console.log("componentDidMount") 
-    }
-});
-
-React.renderComponent(&lt;Component /&gt;, document.body)
-				   	    </code>
-				   	</pre>
-				   	<a href="http://jsfiddle.net/vilan/P3Ue8/2/">fiddle</a>	
-				</section>
-				<section>
-					<p> Refs - DOM elementtien käsittely</p>
-					<pre>
-				   	    <code data-trim>
-var Component = React.createClass({
-    componentWillMount : function(){
-        console.log("componentWillMount")
-    },
-    render : function(){
-        console.log("render");
-        return <p ref="component">component</p>
-    },
-    componentDidMount : function(){
-        console.log("componentDidMount")
-        this.refs.component.getDOMNode().innerHTML="updated after render";
-    }
-});
-
-React.renderComponent(&lt;Component /&gt;, document.body)
-				   	    </code>
-				   	</pre>
-				   	<a href="http://jsfiddle.net/vilan/P3Ue8/3/">fiddle</a>	
-				</section>
-				<section>
-					<p>Komponenttiesimerkki 1 - Kompositio ja propertyt</p>
-					<pre>
-				   	    <code data-trim>
-var Message = React.createClass({
-    render : function(){
-        return (&lt;p&gt;&lt;b&gt;{this.props.sender}&lt;/b&gt; {this.props.message}&lt;/p&gt;)
-    }
-});
-
-var Messages = React.createClass({
-    render: function() {
-        return (&lt;ul&gt;
-                  {this.props.messages.map(function (msg){
-                    return &lt;li&gt;&lt;Message sender={msg.sender} message={msg.message} /&gt;&lt;/li&gt;
-                  })}
-                &lt;/ul&gt;)
-    }
-});
-
-var msgs = [{sender: "Doge", message : "Wow, such example"},
-            {sender: "Swag", message : "#Yolo"}]
-
-React.renderComponent(&lt;Messages messages={msgs} /&gt;, document.body);
-				   	    </code>
-				   	</pre>
-				<a href="http://jsfiddle.net/vilan/X6db4/">fiddle</a>   	
-				</section>-->
 				<section>
 					<p>(really) Simple Message app with React</p>
 				</section>
@@ -351,31 +178,6 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
 				<section>
 					<a href="http://jsfiddle.net/vilan/pBj7m/3/" target="_blank">fiddle</a>
 				</section>	
-				<!--
-				<section>
-					<p>Tilalliset komponentit</p>
-					<ul>
-						<li class="fragment"> Tila alustetaan <code>getInitialState</code> metodissa</li>
-						<li class="fragment"> Tilaa hallinnoidaan vain ja AINOASTAAN <code>setState</code> metodin kautta</li>
-						<li class="fragment"> Komponenttien välinen kommunikointi event callback - metodeilla</li>
-					</ul>	
-				</section>
-				<section>
-					<h2> Mixins </h2>
-				</section>
-				<section>
-					<ul>
-						<li>Voidaan jakaa toiminnallisuutta komponenttien kesken</li>
-						<li class="fragment">Perus Javascript objekteja</li>
-						<li class="fragment">Komponentilla voi olla useampia mixin-objekteja</li>
-						<li class="fragment">Huomattavasti joustavampaa kuin perintä</li>
-					</ul>
-				</section>
-				<section>
-					<p> "Hyödyllinen" Mixin - esimerkki </p>
-					<a href="http://jsfiddle.net/vilan/9NGCb/2/">fiddle</a>
-				</section>
-			-->
 				<section>
 					<h2>Enter Clojure(Script)</h2>
 				</section>
@@ -535,16 +337,14 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
                 </section>	
 			
 			<section>
-			<p>Hoplon.io</p>
-			<!--
+			<p>Hoplon.io</p>		
 			<ul>
 				<li>"Clojure, everywhere."</li>
-				<li class="fragment">Clojurea serveripäässä. ClojureScriptiä clientissa</li>
-				<li class="fragment">Koostuu useasta kirjastosta (Javelin -spreadsheet, Castra RPC,Cljson - client/server communication)</li>
-				<li class="fragment">React?</li>
-				<li class="fragment"><a href="https://github.com/tailrecursion/hoplon">https://github.com/tailrecursion/hoplon</a></li>
+				<li class="fragment">Clojure in server.ClojureScript in browser/li>
+				<li class="fragment">Built from multiple libraries (Javelin -spreadsheet, Castra RPC,Cljson - client/server communication)</li>
 			</ul>
-		-->
+		    </section>
+			<section>
 			<pre>
 			   <code data-trim>	
 &lt;script type="text/hoplon"&gt;
@@ -570,18 +370,33 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
 		   </code>
 		</pre>
 		</section>
-	
 		<section>
-			<h2>Yhteenveto Reactista</h2>
+			<pre>
+			   <code data-trim>	
+(page "foo/bar.html"
+  (:require [my.lib :as lib]))
+
+(defc clicks 0)
+
+(html
+  (head
+    (title "Hello World")
+    (link :rel "stylesheet" :href "css/main.css"))
+  (body
+    (lib/heading-large "Hello, world!")
+    (p (text "You've clicked ~{clicks} times."))
+    (button :on-click #(swap! clicks inc) "Click me!")))	
+		   </code>
+		</pre>
+		</section>	
+		<section>
+			<h2>Conclusion</h2>
 			<ul>
-				<li class="fragment">Kevyt kirjasto</li>
-				<li class="fragment">Soveltuu tilanteisiin kun ei haluta "full stack" sovelluskehystä tyyliin AngularJS mutta halutaan kompositionaalisuutta</li>
-				<li class="fragment">Ref:n avulla voidaan käyttää muita js-kirjastoja, kuten jQuery,handlebars, markdown etc etc</li>
-				<li class="fragment">Suorituskyky erittäin hyvä virtuaalisen DOM:n ja tehokkaan diff-algoritmin myötä</li>
-				<li class="fragment">ClojureScript+React erittäin mielenkiintoinen combo jonka kehitystä kannattaa seurata</li>
+				<li class="fragment">React is nice lightweight library with great performance</li>
+				<li class="fragment">React with ClojureScript is great match</li>
+				<li class="fragment">ClojureScript+React is quite "bleeding edge" at the moment and libraries around it are still immature</li>
 			</ul>
 		</section>
-	    -->
 		<section>
 			<h2>Thank you!</h2>
 			<a href="https://github.com/solita/">https://github.com/solita/</a>
