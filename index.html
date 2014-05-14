@@ -244,37 +244,101 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
 					</pre>
 				</section>
 				<section>
-					<p>..and same with Om - library</p>
+					<p>Om</p>
+					<a href="https://github.com/swannodette/om">https://github.com/swannodette/om</a>
+				</section>
+				<section>
+					<p>Simple message app with Om - library</p>
 					<pre>
 						<code data-trim>
-(defn comment [{:keys [author text]} c]
-  (om/component
-   (dom/div #js {:className "comment"}
-            (dom/h2 nil author)
-            (dom/span nil text))))
+(ns om-example.core
+  (:require [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]))
 
-(defn comment-list [app]
-  (om/component
-   (dom/div nil
-            (dom/div #js {:className "commentList"}
-                     (into-array (map #(om/build comment app
-                                                 {:path [%]})
-                                      (range (count app))))))))
-(defn comment-box [app]
-  (om/component
-   (dom/div #js {:className "commentBox"}
-            (dom/h1 nil "Comment")
-            (om/build comment-list app {:path []}))))
-
-(om/root
- comments-data
- comment-box
- (.getElementById js/document "content"))
+(def app-state (atom {:messages []}))
 						</code>
 					</pre>
-					<small><a href="http://www.lexicallyscoped.com/2013/12/25/slice-of-reactjs-and-cljs.html">Source</a></small>
+				</section>
+				<section>
+					<pre>
+						<code data-trim>
+(defn messages-view [{:keys [messages]} app owner]
+	(if (> (count messages) 0)
+	(apply dom/ul nil
+		(for [msg messages]
+			(dom/li nil (str (:sender msg) " : " (:message msg)))))
+	(dom/h2 nil "no messages")))
+						</code>
+					</pre>
 				</section>	
-				
+				<section>
+					<pre>
+						<code data-trim>
+(defn add-message-view [app owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:message ""
+       :sender ""})
+    om/IRenderState
+    (render-state [this state]  
+      (dom/div nil
+        (dom/input #js {:type "text" 
+                        :placeholder "Sender" 
+                        :value (:sender state)
+                        :onChange #(om/set-state! owner :sender (.. % -target -value))
+                        })
+        (dom/input #js {:type "text" 
+                        :placeholder "Message" 
+                        :value (:message state)
+                        :onChange #(om/set-state! owner :message (.. % -target -value))
+                        })
+        (when (and (> (count (:sender state)) 0)
+                   (> (count (:message state)) 0))
+            (dom/button #js {:onClick #(add-message app owner state)} "add"))))))
+						</code>
+					</pre>
+				</section>
+				<section>
+					<pre>
+						<code data-trim>
+(defn add-message [app owner {:keys [sender message]}]
+    (om/transact! app :messages #(conj % {:message message :sender sender}))
+    (om/set-state! owner :sender "")
+    (om/set-state! owner :message ""))
+						</code>
+					</pre>
+				</section>
+				<section>
+					<pre>
+						<code data-trim>
+(defn app-view [app owner]
+    (dom/div nil
+        (om/build add-message-view app)
+        (om/build messages-view app)))
+
+(om/root
+  app-view
+  app-state
+  {:target (. js/document (getElementById "messages"))})
+						</code>
+					</pre>
+				</section>	
+				<section>
+					<pre>
+						<code data-trim>
+(defn app-view [app owner]
+    (dom/div nil
+        (om/build add-message-view app)
+        (om/build messages-view app)))
+
+(om/root
+  app-view
+  app-state
+  {:target (. js/document (getElementById "messages"))})
+						</code>
+					</pre>
+				</section>		
 				<section>
 					<p>Reagent (ex-Cloact)</p>
 					<a href="https://github.com/holmsand/reagent">https://github.com/holmsand/reagent</a>
@@ -297,7 +361,8 @@ React.renderComponent(<MessageApp messages={msgs} />, document.body);
   (for [msg @messages]
     [:li (str (:sender msg) " : "(:message msg))])]
   [:p "No messages"]))
-					  </code>	
+					  </code>
+					  </pre>	
 				</section>
 				<section>
 					<pre>
